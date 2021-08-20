@@ -16,7 +16,7 @@ namespace ConsoleApplication.Models
             }
             set
             {
-                if (value.Length > 2)
+                if (checkName(value))
                 {
                     _name = value;
                 }
@@ -26,12 +26,39 @@ namespace ConsoleApplication.Models
                 }
             }
         }
+        private bool checkName(string name)
+        {
+            if (name.Length < 2)
+            {
+                return false;
+            }
 
-        public List<Employee> Employees;
+            foreach (char item in name)
+            {
+                if (!Char.IsLetter(item))
+                {
+                    return false;
+                }
+            }
+
+          
+
+            return true;
+
+        }
+        private List<Employee> _employees;
+
+        public List<Employee> Employees
+        {
+            get
+            {
+                return _employees;
+            }
+        }
 
         public Department()
         {
-            Employees = new List<Employee>();
+            _employees = new List<Employee>();
         }
 
         private int _workerLimit;
@@ -87,13 +114,13 @@ namespace ConsoleApplication.Models
                 salaryAverage += emp.Salary;
             }
 
-            salaryAverage /= 2;
+            salaryAverage /= Employees.Count;
 
             return salaryAverage;
         }
         public override string ToString()
         {
-            return $"{Name} {WorkerLimit} {SalaryLimit} {Employees}";
+            return $"{Name} {WorkerLimit} {SalaryLimit} {Employees.Count} {CalcSalaryAverage()}";
         }
 
     }

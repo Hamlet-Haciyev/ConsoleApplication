@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\FX505GT\\Desktop\\New folder\\ConsoleApplication\\ConsoleApplication\\ConsoleApplication.csproj",
+      "projectUniqueName": "C:\\Users\\FX505GT\\Desktop\\ConsoleApplication\\ConsoleApplication\\ConsoleApplication\\ConsoleApplication.csproj",
       "projectName": "ConsoleApplication",
-      "projectPath": "C:\\Users\\FX505GT\\Desktop\\New folder\\ConsoleApplication\\ConsoleApplication\\ConsoleApplication.csproj",
+      "projectPath": "C:\\Users\\FX505GT\\Desktop\\ConsoleApplication\\ConsoleApplication\\ConsoleApplication\\ConsoleApplication.csproj",
       "packagesPath": "C:\\Users\\FX505GT\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\FX505GT\\Desktop\\New folder\\ConsoleApplication\\ConsoleApplication\\obj\\",
+      "outputPath": "C:\\Users\\FX505GT\\Desktop\\ConsoleApplication\\ConsoleApplication\\ConsoleApplication\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

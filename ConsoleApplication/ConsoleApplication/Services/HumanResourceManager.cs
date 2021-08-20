@@ -17,21 +17,53 @@ namespace ConsoleApplication.Services
                 return _departments;
             }
         }
+        private List<Employee> _employees;
+
+        public List<Employee> Employees
+        {
+            get
+            {
+                return _employees;
+            }
+        }
         public HumanResourceManager()
         {
             _departments = new List<Department>();
         }
         public void AddDepartment(Department department)
-        {
-
-            _departments.Add(department);
-
+        {       
+                _departments.Add(department);
         }
-
+        // Iscileri elave etmek uchun bir add metodu yaradiriq. Bu bizden employee objecti ve hansi departname e elave edecemizi isteyir. 
         public void AddEmployee(Employee employee, string departmentName)
         {
+            Employee emp = new Employee();
+            emp.FullName = employee.FullName;
+            emp.Salary = employee.Salary;
+            emp.Position = employee.Position;
+
+            foreach (Department item in Departments)
+            {
+                if (item.Name.ToLower()==departmentName.ToLower())
+                {
+                    item.Employees.Add(emp);
+                }
+            }
 
 
+            //foreach (Department item in Departments)
+            //{
+            //    if (item.Name.ToLower()==departmentName.ToLower())
+            //    {
+                   
+            //        if (item.Employees.Count < item.WorkerLimit)
+            //        {
+            //            item.Employees.Add(employee);
+            //        }
+            //    }
+               
+            //}
+           
         }
 
         public void EditDepartaments(string oldName, string newName)
@@ -45,6 +77,7 @@ namespace ConsoleApplication.Services
         public List<Department> GetDepartments()
         {
             return Departments;
+            Console.WriteLine("asdasd");
         }
 
         public void RemoveEmployee(int num, string departmentName)

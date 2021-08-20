@@ -6,8 +6,8 @@ namespace ConsoleApplication.Models
 {
     class Employee
     {
-        private static int _empOrder;
-
+        private static int _empOrder=1000;
+        
         public Employee()
         {
             _empOrder++;
@@ -27,7 +27,7 @@ namespace ConsoleApplication.Models
             }
             set
             {
-                if (value.Length > 2)
+                if (checkName(value))
                 {
                     _position = value;
                 }
@@ -36,6 +36,26 @@ namespace ConsoleApplication.Models
                 }
             }
         }
+
+        private bool checkName(string name)
+        {
+            if (name.Length < 2)
+            {
+                return false;
+            }
+
+            foreach (char item in name)
+            {
+                if (!Char.IsLetter(item))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+
+        }
+
 
         private int _salary;
         public int Salary
