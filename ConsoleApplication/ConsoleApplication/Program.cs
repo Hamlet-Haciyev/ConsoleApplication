@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using ConsoleApplication.Services;
 using ConsoleApplication.Models;
@@ -120,7 +120,7 @@ namespace ConsoleApplication
                         editEmployee(humanResourceManager);
                         break;
                     case 5:
-                        removeEmployee();
+                        removeEmployee(humanResourceManager);
                         break;
 
                     case 6:
@@ -135,20 +135,27 @@ namespace ConsoleApplication
         }
         #endregion
 
+
+
         #region getDepartmentInfo
         static void getDepartmentInfo(HumanResourceManager humanResourceManager)
         {
-            humanResourceManager.GetDepartments();
 
-            //Employee employee = new Employee();
-            //Department department = new Department();
 
-            //for (int i = 0; i < humanResourceManager.Departments.Count; i++)
-            //{
-            //    Console.WriteLine($"{humanResourceManager.Departments[i].Name} {humanResourceManager.Departments[i]} {humanResourceManager.Departments[i].CalcSalaryAverage()}");
-            //}
-            //Console.WriteLine(humanResourceManager.GetDepartments());
-            
+            foreach (Department item in humanResourceManager.Departments)
+            {
+
+                if (item.Employees.Count > 0)
+                {
+                    Console.WriteLine($"{item.Name} {item.Employees.Count} {item.CalcSalaryAverage()}");
+
+                }
+                else
+                {
+                    Console.WriteLine($"{item.Name} departmentinde isci yoxdur");
+                }
+            }
+
         }
         #endregion
 
@@ -234,10 +241,7 @@ namespace ConsoleApplication
             department.Name = newName;
             department.SalaryLimit = salInt;
             department.WorkerLimit = eLimit;
-
-            Console.WriteLine("Department uzerindeki deyisikler ugurla edildi");
-
-           
+        
         }
         #endregion
 
@@ -272,7 +276,6 @@ namespace ConsoleApplication
 
                 for (int i = 0; i < dep.Employees.Count; i++)
                 {
-                    Console.WriteLine("asdasd");
                     Console.WriteLine($"{dep.Employees[i].NO} {dep.Employees[i].FullName} {dep.Employees[i].Position} {dep.Employees[i].Salary}");
                 }
             }
@@ -283,7 +286,7 @@ namespace ConsoleApplication
         #region addEmployee
         static void addEmployee(HumanResourceManager humanResourceManager)
         {
-            Employee emp1 = new Employee();
+
 
             Console.WriteLine("Fullname-i girin!!!");
             string fullname = Console.ReadLine();
@@ -303,14 +306,14 @@ namespace ConsoleApplication
 
             Console.WriteLine("Departmanin adini girin!!!");
             string DepartmanName = Console.ReadLine();
+            Employee emp = new Employee(DepartmanName);
 
-            emp1.FullName = fullname;
-            emp1.Salary = salaryInt;
-            emp1.Position = position;
+            emp.FullName = fullname;
+            emp.Salary = salaryInt;
+            emp.Position = position;
+            
 
-            humanResourceManager.AddEmployee(emp1, DepartmanName);
-
-            //humanResourceManager.Departments;
+            humanResourceManager.AddEmployee(emp,DepartmanName);
         }
         #endregion
 
@@ -318,31 +321,87 @@ namespace ConsoleApplication
         static void editEmployee(HumanResourceManager humanResourceManager)
         {
 
-            Console.WriteLine("deyisiklik etmek istediyiniz iscinin nomresini daxil edin!!!");
+            Console.WriteLine("Deyisiklik etmek istediyiniz iscinin nomresini daxil edin!!!");
             string employyeNo = Console.ReadLine();
-            int empNo;
 
-            while (!int.TryParse(employyeNo,out empNo))
+            bool check = false;
+            string nowName = " ";
+            int nowSalary=0;
+            string nowPosition = " ";
+
+            int depIndex = 0;
+            int empIndex = 0;
+            for (int i = 0; i < humanResourceManager.Departments.Count; i++)
             {
-                Console.WriteLine("deyisiklik etmek istediyiniz iscinin nomresini daxil edin!!!");
-                employyeNo = Console.ReadLine();
-                int.TryParse(employyeNo, out empNo);
+                for (int a = 0; a < humanResourceManager.Departments[i].Employees.Count; a++)
+                {
+
+                    if (employyeNo == humanResourceManager.Departments[i].Employees[a].NO)
+                    {
+                        check = true;
+                        if (check)
+                        {
+                            nowName = humanResourceManager.Departments[i].Employees[a].FullName;
+                            nowSalary = humanResourceManager.Departments[i].Employees[a].Salary;
+                            nowPosition = humanResourceManager.Departments[i].Employees[a].Position;
+                            depIndex = i;
+                            empIndex = a;
+                        }
+                        break;
+                    }         
+                 
+                }
             }
 
-            //foreach (Employee item in humanResourceManager.Departments)
-            //{
-            //    if ()
-            //    {
+            if (check)
+            {
+                Console.WriteLine($"{nowName} {nowSalary} {nowPosition}");
+                Console.WriteLine("yeni maasi girin!!!");
+                string salary = Console.ReadLine();
+                int SalaryInt;
 
-            //    }
-            //}
+                while (!int.TryParse(salary,out SalaryInt))
+                {
+                    Console.WriteLine("yeni maasi girin!!!");
+                    salary = Console.ReadLine();
+                    int.TryParse(salary, out SalaryInt);
+                }
+                Console.WriteLine("yeni vezifeni girin");
+                string newPosition = Console.ReadLine();
+
+                humanResourceManager.Departments[depIndex].Employees[empIndex].Position = newPosition;
+                humanResourceManager.Departments[depIndex].Employees[empIndex].Salary = SalaryInt;
+            }
+            else
+            {
+                baseMethod(humanResourceManager);
+            }
 
         }
         #endregion
 
         #region removeEmployee
-        static void removeEmployee()
+        static void removeEmployee(HumanResourceManager humanResourceManager)
         {
+            Console.WriteLine("Silmek istediyiviz iscinin islediyivi departmanin adini girin!!!");
+            string depName = Console.ReadLine();
+
+            Department department = humanResourceManager.Departments.Find(d => d.Name == depName);
+
+            Console.WriteLine("Silmek istediyiviz iscinin nomresinin girin");
+            string no = Console.ReadLine();
+
+            if (department!=null)
+            {
+                for (int i = 0; i < department.Employees.Count; i++)
+                {
+                    if (department.Employees[i].NO==no)
+                    {
+                        department.Employees.Remove(department.Employees[i]);
+                        return;
+                    }
+                }
+            }
 
         }
         #endregion

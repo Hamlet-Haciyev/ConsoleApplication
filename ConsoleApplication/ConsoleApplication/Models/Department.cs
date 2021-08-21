@@ -41,9 +41,7 @@ namespace ConsoleApplication.Models
                 }
             }
 
-          
-
-            return true;
+          return true;
 
         }
         private List<Employee> _employees;
@@ -97,13 +95,10 @@ namespace ConsoleApplication.Models
                 }
                 else
                 {
-                    Console.WriteLine("mebleg minumum 250 ola biler!!!");
+                    Console.WriteLine("Departmentdeki mebleg minumum 250 ola biler!!!");
                 }
             }
         }
-
-
-
 
         public int CalcSalaryAverage()
         {
@@ -114,13 +109,13 @@ namespace ConsoleApplication.Models
                 salaryAverage += emp.Salary;
             }
 
-            salaryAverage /= Employees.Count;
+            salaryAverage /= Employees.Count; 
 
             return salaryAverage;
         }
         public override string ToString()
         {
-            return $"{Name} {WorkerLimit} {SalaryLimit} {Employees.Count} {CalcSalaryAverage()}";
+            return $"{Name} {Employees.Count} {CalcSalaryAverage()}";
         }
 
     }

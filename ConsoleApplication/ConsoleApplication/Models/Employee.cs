@@ -6,14 +6,26 @@ namespace ConsoleApplication.Models
 {
     class Employee
     {
-        private static int _empOrder=1000;
-        
+
+        private static int _empOrder = 1000;
+
+        public string DepartmentName;
+
+        public string NO;
         public Employee()
         {
-            _empOrder++;
-            NO = DepartmentName.Substring(0, 2).ToUpper() + _empOrder;
+            
+
         }
-        public string NO;
+        public Employee(string dep) : this()
+        {
+            DepartmentName = dep;
+
+            _empOrder++;
+
+            NO = DepartmentName.Substring(0, 2).ToUpper() + _empOrder;
+
+        }
 
         public string FullName;
 
@@ -77,7 +89,6 @@ namespace ConsoleApplication.Models
             }
         }
 
-        public string DepartmentName;
 
     }
 }
