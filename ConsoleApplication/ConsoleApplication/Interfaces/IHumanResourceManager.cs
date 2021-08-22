@@ -6,7 +6,7 @@ namespace ConsoleApplication.Interfaces
 {
     interface IHumanResourceManager
     {
-        public List<Department> Departments { get; }
+        public List<Department> Departments { get; set; }
 
         public void AddDepartment(Department department);
 

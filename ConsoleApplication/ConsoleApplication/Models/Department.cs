@@ -6,8 +6,8 @@ namespace ConsoleApplication.Models
 {
     class Department
     {
+        // Departmanin adi encapsulation edirikki classin xaricinden isledile bilmesin
         private string _name;
-
         public string Name
         {
             get
@@ -16,34 +16,40 @@ namespace ConsoleApplication.Models
             }
             set
             {
-                if (checkName(value))
-                {
-                    _name = value;
-                }
-                else
-                {
-                    Console.WriteLine("Departmentin adi 2 herfden az ola bilmez!!!");
-                }
+              
+                    if (checkName(value))
+                    {
+                        _name = value;
+                    }
+                                
             }
         }
+        // Departmanin adinda uzunlugunun 2 den cox oldugunu ve 2 den cox herf oldugunu yoxlamaq uchun metod.
         private bool checkName(string name)
         {
+            int letterCount = 0;
             if (name.Length < 2)
             {
                 return false;
             }
 
-            foreach (char item in name)
+            for (int i = 0; i < name.Length; i++)
             {
-                if (!Char.IsLetter(item))
+                
+                if (Char.IsLetter(name[i]))
                 {
-                    return false;
+                    letterCount++;
                 }
             }
+            if (letterCount < 2)
+            {                
+                return false;
+            }
 
-          return true;
+            return true;
 
         }
+        // Her bir departmain oz isci listi olurki hemin liste departmentde isleyen butun isciler saxlanilir ve bunun encapsulation edirikki kenardan mudaxile olmasin.
         private List<Employee> _employees;
 
         public List<Employee> Employees
@@ -53,12 +59,13 @@ namespace ConsoleApplication.Models
                 return _employees;
             }
         }
-
+        // Employees listini initialize edirik.
         public Department()
         {
             _employees = new List<Employee>();
         }
 
+        // Departmentde en cox ne qeder ishcinin isleye bilceyini bildirimek uchun bir field , bunuda encapsulation edirik xaricden mudaxile olmasin deye.
         private int _workerLimit;
         public int WorkerLimit
         {
@@ -78,7 +85,7 @@ namespace ConsoleApplication.Models
                 }
             }
         }
-
+        // Departmentde isleyecek iscilerin en az ala bilecek maasi elimizde saxlamaq uchun lazim olan bir field bunuda  encapsulation edirik.
         private int _salaryLimit;
 
         public int SalaryLimit
@@ -99,7 +106,7 @@ namespace ConsoleApplication.Models
                 }
             }
         }
-
+        // Departmentdeki ishcilerin ortalama maaslarini hesablayacaq metod.
         public int CalcSalaryAverage()
         {
             int salaryAverage = 0;

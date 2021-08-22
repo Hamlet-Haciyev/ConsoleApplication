@@ -9,15 +9,17 @@ namespace ConsoleApplication
     {
         static void Main(string[] args)
         {
+            // HumanResourcesManager classini initialize ederek bir object yaradiriq ve butun islerimizi bu object uzerinde goruruk.
             HumanResourceManager humanrresourcemanager = new HumanResourceManager();
             baseMethod(humanrresourcemanager);
         }
+        // Bizim esas metodumuzdur hansi ki department ve ya isciler uzerindeki emeliyyatlara getmeyimiz uchun bu metod islemelidir.
         #region baseMethod
         static void baseMethod(HumanResourceManager humanResourceManager)
         {
             do
             {
-                Console.WriteLine("1-  Departmentlerle elaqeli isler uchun 1 duymesini secin");
+                Console.WriteLine("1-  Departamentlerle elaqeli isler uchun 1 duymesini secin");
                 Console.WriteLine("2-  Ischiler uzerindeki emaliyyatlar uchun 2 duymesinin secin");
 
                 string choose = Console.ReadLine();
@@ -43,15 +45,15 @@ namespace ConsoleApplication
             } while (true);
         }
         #endregion
-
+        // Department uzerindeki emeliyyatlar uchun bu metodu isledirik.
         #region DepartmentOperation
         static void DepartmentOperation(HumanResourceManager humanResourceManager)
         {
             do
             {
-                Console.WriteLine("1 - Departameantlerin siyahisini gostermek");
-                Console.WriteLine("2 - Departamenet yaratmaq");
-                Console.WriteLine("3 - Departmanetde deyisiklik etmek");
+                Console.WriteLine("1 - Departamentlerin siyahisini gostermek");
+                Console.WriteLine("2 - Departament yaratmaq");
+                Console.WriteLine("3 - Departamentde deyisiklik etmek");
                 Console.WriteLine("4 - Proses menusuna qayitmaq");
 
 
@@ -85,7 +87,7 @@ namespace ConsoleApplication
             } while (true);
         }
         #endregion
-
+        // Ischiler uzerinde emelliyatlar etmke uchun ise EmployyeOperation metodundan istifade etmeliyik.
         #region EmployeeOperation
         static void EmployeeOperation(HumanResourceManager humanResourceManager)
         {
@@ -136,7 +138,7 @@ namespace ConsoleApplication
         #endregion
 
 
-
+        // Bu metod bizim departamentimizin adinin , orda nece ischinin calisigini ve onlarin ortalama maasini gosterir.
         #region getDepartmentInfo
         static void getDepartmentInfo(HumanResourceManager humanResourceManager)
         {
@@ -147,18 +149,18 @@ namespace ConsoleApplication
 
                 if (item.Employees.Count > 0)
                 {
-                    Console.WriteLine($"{item.Name} {item.Employees.Count} {item.CalcSalaryAverage()}");
+                    Console.WriteLine($"Departamentin adi: {item.Name} Departamentdeki isci sayisi: {item.Employees.Count} Departamentideki iscilerin ortalama maasi: {item.CalcSalaryAverage()}");
 
                 }
                 else
                 {
-                    Console.WriteLine($"{item.Name} departmentinde isci yoxdur");
+                    Console.WriteLine($"Departamentin adi: {item.Name} Departamentdeki isci sayisi: 0 -di ve buna gore deye ortalam emek haqqi da 0 olur.");
                 }
             }
 
         }
         #endregion
-
+        // CreateDepartment metodu bize department yaratmaq uchun lazimdi. Bu metodla departmenti yaradib sonra ora isci elave ede iscini update ede ve sile bilerik.
         #region createDepartment
         static void createDepartment(HumanResourceManager humanResourceManager)
         {
@@ -168,16 +170,16 @@ namespace ConsoleApplication
             {
                 Console.WriteLine("Departmentin adinin girin!!!");
                 string DepartName = Console.ReadLine();
-                Console.WriteLine("isci limitini girin");
+                Console.WriteLine("Isci limitini girin");
 
                 string empLimit = Console.ReadLine();
-                int workerLimit;
+                int empCount;
 
-                while (!int.TryParse(empLimit, out workerLimit))
+                while (!int.TryParse(empLimit, out empCount))
                 {
-                    Console.WriteLine("isci limitini girin");
+                    Console.WriteLine("Isci limitini girin");
                     empLimit = Console.ReadLine();
-                    int.TryParse(empLimit, out workerLimit);
+                    int.TryParse(empLimit, out empCount);
                 }
                 Console.WriteLine("Maas limitini daxil edin");
 
@@ -186,23 +188,24 @@ namespace ConsoleApplication
 
                 while (!int.TryParse(salaryLimit, out salaryCount))
                 {
-                    Console.WriteLine("isci limitini girin");
+                    Console.WriteLine("Maas limitini daxil edin");
                     salaryLimit = Console.ReadLine();
                     int.TryParse(salaryLimit, out salaryCount);
                 }
-                department1.Name = DepartName;
+                department1.Name = DepartName.Trim();
                 department1.SalaryLimit = salaryCount;
-                department1.WorkerLimit = workerLimit;
+                department1.WorkerLimit = empCount;
 
 
                 humanResourceManager.AddDepartment(department1);
+                
                 check = true;
             }
 
 
         }
         #endregion
-
+        // Edit departament metodu departament uzerinde deyisikler aparmaq uchun lazimdi. Bu metod sayesinde departamente yeni ad , isci limiti ve yeni maas limiti qoya bilerik. 
         #region editDepartment
         static void editDepartment(HumanResourceManager humanResourceManager)
         {
@@ -212,7 +215,7 @@ namespace ConsoleApplication
             Department department = humanResourceManager.Departments.Find(h => h.Name.ToLower() == name.ToLower());
             if (department == null)
             {
-                Console.WriteLine("daxil etdiyiniz department yoxdur!!!");
+                Console.WriteLine("Daxil etdiyiniz adda department yoxdur!!!");
                 return;
             }
 
@@ -246,22 +249,21 @@ namespace ConsoleApplication
         #endregion
 
 
-
-
+        // GetEmployees metodu bize butun departamentlerde olan ischilerin siyahisinin getirir.
         #region getEmployees
         static void getEmployees(HumanResourceManager humanResourceManager)
         {
             for (int i = 0; i < humanResourceManager.Departments.Count; i++)
             {
                 Department departmentEmployees = humanResourceManager.Departments[i];
-                for (int a = 0; i < departmentEmployees.Employees.Count; a++)
+                for (int a = 0; a < departmentEmployees.Employees.Count; a++)
                 {
-                    Console.WriteLine($"{departmentEmployees.Employees[i].NO} {departmentEmployees.Employees[i].FullName} {departmentEmployees.Employees[i].DepartmentName} {departmentEmployees.Employees[i].Salary}");
+                    Console.WriteLine($"Iscinin nomresi: {departmentEmployees.Employees[a].NO} Iscinin ad ve soyadi: {departmentEmployees.Employees[a].FullName} Departmanin adi: {departmentEmployees.Employees[a].DepartmentName} Iscinin maasi: {departmentEmployees.Employees[a].Salary}");
                 }
             }
         }
         #endregion
-
+        // GetEmplyeesInDepartment metodu bizden hansi departamendeki ischilerin siyasini gormek istediyimizi sorusur. Biz hansini istediyimizi bildirdikde hemin departamentdeki butun ischilerin siyahisini getirir.
         #region getEmployeesInDepartment
         static void getEmployeesInDepartment(HumanResourceManager humanResourceManager)
         {
@@ -276,13 +278,17 @@ namespace ConsoleApplication
 
                 for (int i = 0; i < dep.Employees.Count; i++)
                 {
-                    Console.WriteLine($"{dep.Employees[i].NO} {dep.Employees[i].FullName} {dep.Employees[i].Position} {dep.Employees[i].Salary}");
+                    Console.WriteLine($"Departamentdeki iscinin nomresi: {dep.Employees[i].NO} Iscinin ad ve soyadi: {dep.Employees[i].FullName} Iscinin tutdugu vezife: {dep.Employees[i].Position} Iscinin aldigi maas: {dep.Employees[i].Salary}");
                 }
+            }
+            else
+            {
+                Console.WriteLine("Axtardiginiz adda department yoxdur");
             }
          
         }
         #endregion
-
+        // addEmployee metodu sayesinde bizden hansi departamente ischi elave etmek istedimizi sorusur ve biz onu girdikden sonra ischinin hemin departamentde elave edir.
         #region addEmployee
         static void addEmployee(HumanResourceManager humanResourceManager)
         {
@@ -291,15 +297,15 @@ namespace ConsoleApplication
             Console.WriteLine("Fullname-i girin!!!");
             string fullname = Console.ReadLine();
 
-            Console.WriteLine("Isci tutdugunuz vezifeni girin!!");
+            Console.WriteLine("Iscinin tutdugu vezifeni girin!!");
             string position = Console.ReadLine();
 
-            Console.WriteLine("maasi girin!!!");
+            Console.WriteLine("Maasi girin!!!");
             string salary = Console.ReadLine();
             int salaryInt;
             while (!int.TryParse(salary,out salaryInt))
             {
-                Console.WriteLine("maasi girin!!!");
+                Console.WriteLine("Maasi girin!!!");
                 salary = Console.ReadLine();
                 int.TryParse(salary, out salaryInt);
             }
@@ -308,15 +314,16 @@ namespace ConsoleApplication
             string DepartmanName = Console.ReadLine();
             Employee emp = new Employee(DepartmanName);
 
-            emp.FullName = fullname;
+            emp.FullName = fullname.Trim();
             emp.Salary = salaryInt;
-            emp.Position = position;
+            emp.Position = position.Trim();
+            
             
 
             humanResourceManager.AddEmployee(emp,DepartmanName);
         }
         #endregion
-
+        // editEmployee metodu bizden ischinin nomresini girmeyimizi isteyir ve hemin normeli ischi varsa hemin ischi uzeride deyisiklik etmeyimize imkan verir.
         #region editEmployee
         static void editEmployee(HumanResourceManager humanResourceManager)
         {
@@ -336,7 +343,7 @@ namespace ConsoleApplication
                 for (int a = 0; a < humanResourceManager.Departments[i].Employees.Count; a++)
                 {
 
-                    if (employyeNo == humanResourceManager.Departments[i].Employees[a].NO)
+                    if (employyeNo.ToUpper() == humanResourceManager.Departments[i].Employees[a].NO)
                     {
                         check = true;
                         if (check)
@@ -379,11 +386,11 @@ namespace ConsoleApplication
 
         }
         #endregion
-
+        // removeEmployee metodu bizden ilk once hansi departmandan ischi silmek  isteyimizi sorusur. Biz daxil edirik eger hemin department varsa bizden ischinin nomresinin sorusur onuda daxil etdikten sonra hemin nomreli ischi varsa onu silir.
         #region removeEmployee
         static void removeEmployee(HumanResourceManager humanResourceManager)
         {
-            Console.WriteLine("Silmek istediyiviz iscinin islediyivi departmanin adini girin!!!");
+            Console.WriteLine("Silmek istediyiviz iscinin islediyi departmanin adini girin!!!");
             string depName = Console.ReadLine();
 
             Department department = humanResourceManager.Departments.Find(d => d.Name == depName);
@@ -395,7 +402,7 @@ namespace ConsoleApplication
             {
                 for (int i = 0; i < department.Employees.Count; i++)
                 {
-                    if (department.Employees[i].NO==no)
+                    if (department.Employees[i].NO==no.ToUpper())
                     {
                         department.Employees.Remove(department.Employees[i]);
                         return;
