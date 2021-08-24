@@ -8,13 +8,10 @@ namespace ConsoleApplication.Models
     {
         // Departmentdeki ischilerin her birinin oz nomresi olur ve biz bunu stativ qeyd ederek constructor icerinde davamli olaraq artiririqki her ischi elave olunanda onun ozune xas nomresi olsun.
         private static int _empOrder = 1000;
-
+        
         public string DepartmentName;
-
-        public static void method()
-        {
-            _empOrder = 1000;
-        }
+       
+       
         // Ishcilerin nomrelerini tutacgimiz field encapsulation edirik xariden mudaxile olmasin deye.
         private string _no;
 
@@ -65,7 +62,7 @@ namespace ConsoleApplication.Models
                     }
                     else
                     {
-
+                        _empOrder--;
                         Console.WriteLine("Iscinin vezifesi mimumum 2 herfden ibaret olmalidir!!!");
                     }
                 }

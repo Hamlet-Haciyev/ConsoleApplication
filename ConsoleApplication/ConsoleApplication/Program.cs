@@ -143,7 +143,10 @@ namespace ConsoleApplication
         static void getDepartmentInfo(HumanResourceManager humanResourceManager)
         {
 
-
+            if (humanResourceManager.Departments.Count == 0)
+            {
+                Console.WriteLine("Departament yoxdur!!!");
+            }
             foreach (Department item in humanResourceManager.Departments)
             {
 
@@ -253,11 +256,13 @@ namespace ConsoleApplication
         #region getEmployees
         static void getEmployees(HumanResourceManager humanResourceManager)
         {
+            
             for (int i = 0; i < humanResourceManager.Departments.Count; i++)
             {
                 Department departmentEmployees = humanResourceManager.Departments[i];
                 for (int a = 0; a < departmentEmployees.Employees.Count; a++)
                 {
+                   
                     Console.WriteLine($"Iscinin nomresi: {departmentEmployees.Employees[a].NO} Iscinin ad ve soyadi: {departmentEmployees.Employees[a].FullName} Departmanin adi: {departmentEmployees.Employees[a].DepartmentName} Iscinin maasi: {departmentEmployees.Employees[a].Salary}");
                 }
             }
@@ -299,6 +304,12 @@ namespace ConsoleApplication
 
             Console.WriteLine("Iscinin tutdugu vezifeni girin!!");
             string position = Console.ReadLine();
+
+            while (position.Length < 2)
+            {
+                Console.WriteLine("Iscinin tutdugu vezifeni girin!!");
+                position = Console.ReadLine();
+            }
 
             Console.WriteLine("Maasi girin!!!");
             string salary = Console.ReadLine();
@@ -381,7 +392,7 @@ namespace ConsoleApplication
             }
             else
             {
-                baseMethod(humanResourceManager);
+                Console.WriteLine("Axtardiginiz nomreli isci yoxdur!!!");
             }
 
         }
@@ -402,7 +413,7 @@ namespace ConsoleApplication
             {
                 for (int i = 0; i < department.Employees.Count; i++)
                 {
-                    if (department.Employees[i].NO==no.ToUpper())
+                    if (department.Employees[i].NO == no.ToUpper())
                     {
                         department.Employees.Remove(department.Employees[i]);
                         return;
@@ -410,6 +421,7 @@ namespace ConsoleApplication
                 }
             }
 
+           
         }
         #endregion
     }

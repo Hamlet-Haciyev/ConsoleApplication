@@ -34,8 +34,7 @@ namespace ConsoleApplication.Models
             }
 
             for (int i = 0; i < name.Length; i++)
-            {
-                
+            {               
                 if (Char.IsLetter(name[i]))
                 {
                     letterCount++;
@@ -57,6 +56,10 @@ namespace ConsoleApplication.Models
             get
             {
                 return _employees;
+            }
+            set
+            {
+                _employees = value;
             }
         }
         // Employees listini initialize edirik.
@@ -106,6 +109,9 @@ namespace ConsoleApplication.Models
                 }
             }
         }
+
+    
+
         // Departmentdeki ishcilerin ortalama maaslarini hesablayacaq metod.
         public int CalcSalaryAverage()
         {
@@ -123,6 +129,17 @@ namespace ConsoleApplication.Models
         public override string ToString()
         {
             return $"{Name} {Employees.Count} {CalcSalaryAverage()}";
+        }
+
+        // Bu metod departmentdeki butun ischilerin maaslarini toplaraq geriye qaytarir.
+        public int Sum()
+        {
+            int result = 0;
+            for (int i = 0; i < _employees.Count; i++)
+            {
+                result += _employees[i].Salary;
+            }
+            return result;
         }
 
     }

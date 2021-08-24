@@ -66,40 +66,53 @@ namespace ConsoleApplication.Services
             emp.DepartmentName = employee.DepartmentName;
             emp.NO = employee.NO;
 
-
+            // Ischilerin maaslarinni toplamaq uchun bir degisken
+            int result = 0;
+            
+            
 
             foreach (Department item in _departments)
             {
+                for (int i = 0; i < item.Employees.Count; i++)
+                {
+                    result += item.Sum()+ emp.Salary;
+                }
                 if (item.Name.ToLower() == depName.ToLower())
                 {
-                    if (item.WorkerLimit > item.Employees.Count)
+                    // Sirketin umumi maas limiti ile ischilerin umumi maaslarini muqayise edirik.
+                    if (item.SalaryLimit >= result)
                     {
-                        if (emp.Salary > 250)
+
+                        if (item.WorkerLimit > item.Employees.Count)
                         {
-
-
-                            try
+                            if (emp.Salary > 250)
                             {
-                                if (employee.Position.Length >= 2)
+                                try
                                 {
-                                    item.Employees.Add(emp);
-                                    Console.WriteLine("isci sirkete ugurla elave edildi!!!");
+                                    if (employee.Position.Length >= 2)
+                                    {
+                                        item.Employees.Add(emp);
+                                        Console.WriteLine("isci sirkete ugurla elave edildi!!!");
+
+                                    }
+                                    
+                                }
+                                catch (Exception)
+                                {
+
+
                                 }
                             }
-                            catch (Exception)
-                            {
-
-
-                            }
-
-
 
                         }
-
+                        else
+                        {
+                            Console.WriteLine($"{item.Name} departmentinde isci elave etmek uchun bos yer yoxdur!!!");
+                        }
                     }
                     else
                     {
-                        Console.WriteLine($"{item.Name} departmentinde isci elave etmek uchun bos yer yoxdur!!!");
+                        Console.WriteLine("Departmente ischi elave olunmadi.Cunki departmentin mebleg maasi limitini kecir!!!");
                     }
                 }
 
@@ -178,18 +191,14 @@ namespace ConsoleApplication.Services
                         if (item.Employees[i].NO == num.ToUpper())
                         {
                             item.Employees.Remove(item.Employees[i]);
-                            Console.WriteLine("isci departmenden ugurla silindi");
                         }
                         else
                         {
-                            Console.WriteLine("axtardiginiz nomreli isci yoxdur!!!");
+                            Console.WriteLine("Axtardiginiz nomreli isci yoxdur!!!");
                         }
                     }
                 }
-                else
-                {
-                    Console.WriteLine("axtardiginiz adli department yoxdur!!!");
-                }
+                
             }
         }
         #endregion
